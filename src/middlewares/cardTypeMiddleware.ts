@@ -1,7 +1,7 @@
 import createCardSchema from "../schemas/createCardSchema";
 import { Request, Response, NextFunction } from "express";
 
-export default function createCardMiddleware(req: Request, res: Response, next: NextFunction){
+export default function cardTypeMiddleware(req: Request, res: Response, next: NextFunction){
     const cardType = req.body;
 
 
