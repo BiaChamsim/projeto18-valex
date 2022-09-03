@@ -116,3 +116,5 @@ export default async function addCard(companyKey: any, employeeId:number, isVirt
 
     await cardrepository.insert(cardIfos)
 }
+
+

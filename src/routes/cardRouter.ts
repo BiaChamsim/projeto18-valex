@@ -1,13 +1,14 @@
 import { Router } from "express";
-import createCardMiddleware from "../middlewares/cardTypeMiddleware";
-import { createCard } from "../controllers/createCardController";
+import cardTypeMiddleware from "../middlewares/cardTypeMiddleware";
+import { createCard, activateCard } from "../controllers/cardController";
+import activationCardMiddleware from "../middlewares/activationCardMiddleware";
 
 const cardRouter = Router();
 
 
 
-cardRouter.post("/create-card/:id", createCardMiddleware, createCard);
-cardRouter.post("/activate-card");
+cardRouter.post("/create-card/:id", cardTypeMiddleware, createCard);
+cardRouter.post("/activate-card", activationCardMiddleware, activateCard);
 
 
 
