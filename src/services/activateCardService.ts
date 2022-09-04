@@ -64,5 +64,5 @@ export default async function activationCard(number: string, cardholderName: str
     const verifyCVV = checkCVV(cardData.securityCode, cvv)
     const encryptedPassword = encryptPassword(password)
 
-    await cardrepository.update(cardData.id, {...cardData, password: encryptedPassword})
+    await cardrepository.update(cardData.id, {...cardData, password: encryptedPassword, isBlocked: false})
 }

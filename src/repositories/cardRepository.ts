@@ -122,3 +122,16 @@ export async function update(id: number, cardData: CardUpdateData) {
 export async function remove(id: number) {
   connection.query<any, [number]>("DELETE FROM cards WHERE id=$1", [id]);
 }
+
+export async function getBalance(cardId: number){
+  const balance = await connection.query(`
+    SELECT COALESCE(SUM(recharges.amount), 0) - COALESCE(SUM(payments.amount), 0) AS balance
+    FROM payments 
+    RIGHT JOIN recharges
+    ON payments."cardId" = recharges."cardId"
+    WHERE payments."cardId" = $1
+    OR recharges."cardId" = $1
+  `, [cardId])
+
+  return balance.rows[0]
+}
