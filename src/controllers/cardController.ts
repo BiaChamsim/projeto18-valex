@@ -4,6 +4,8 @@ import activationCard from "../services/activateCardService";
 import rechargeCardService from "../services/rechargeCardService";
 import paymentService from "../services/paymentService";
 import balanceAndTransactions from "../services/transactionsService";
+import blockCard from "../services/blockedCardService";
+import unblockCard from "../services/unblockCardService";
 
 
 export async function createCard(req: Request, res: Response){
@@ -69,6 +71,52 @@ export async function cardTransactions(req: Request, res: Response){
     }
 }
 
+export async function block(req: Request, res: Response){
+    try{
+        const cardId = Number(req.params.id)
+        const {password} = req.body
+
+        await blockCard(cardId, password)
+
+        res.sendStatus(201);
+
+    }catch(error: any){
+        if(error.code === "not found"){
+            return res.status(404).send(error.message)
+        }else if(error.code === "unauthorized"){
+            return res.status(401).send(error.message)
+        }else if(error.code === "conflict"){
+            return res.status(409).send(error.message)
+        }
+
+        console.log(error)
+        res.sendStatus(500);
+    }
+}
+
+export async function unblock(req: Request, res: Response){
+    try{
+        const cardId = Number(req.params.id)
+        const {password} = req.body
+
+        await unblockCard(cardId, password)
+
+        res.sendStatus(201);
+
+    }catch(error: any){
+        if(error.code === "not found"){
+            return res.status(404).send(error.message)
+        }else if(error.code === "unauthorized"){
+            return res.status(401).send(error.message)
+        }else if(error.code === "conflict"){
+            return res.status(409).send(error.message)
+        }
+
+        console.log(error)
+        res.sendStatus(500);
+    }
+}
+
 export async function rechargeCard(req: Request, res: Response){
     try{
         const companyKey = req.headers["x-api-key"];
@@ -107,3 +155,4 @@ export async function payment(req: Request, res: Response){
         }
     }
 }
+

@@ -17,15 +17,7 @@ async function checkCard(cardId: number){
 }
 
 
-/*{
-    "balance": 35000,
-    "transactions": [
-          { "id": 1, "cardId": 1, "businessId": 1, "businessName": "DrivenEats", "timestamp": "22/01/2022", "amount": 5000 }
-      ]
-    "recharges": [
-          { "id": 1, "cardId": 1, "timestamp": "21/01/2022", "amount": 40000 }
-      ]
-  }*/
+//Formata do objeto a propriedade timestamp
 function formatTimestamp(transactionsList: any){
     const formatedTransactions = [];
 
@@ -38,7 +30,7 @@ function formatTimestamp(transactionsList: any){
 }
 
 
-
+//Formata objeto
 async function formatBalanceTransactions(cardId: number){
     const balance = await cardrepository.getBalance(cardId)
     const transactions = await paymentRepository.findByCardId(cardId)
